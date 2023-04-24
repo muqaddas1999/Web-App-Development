@@ -1,6 +1,8 @@
 # Web-App-Development
 Activity 2
+
 Based on the Baham use case video, we can create the following Django models:
+
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -25,6 +27,8 @@ class Order(models.Model):
     total_price = models.DecimalField(max_digits=8, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+    
 Here, we have defined three models: Product, Customer, and Order.
 
 The Product model has fields for name, description, price, created_at, and updated_at.
@@ -34,6 +38,7 @@ The Customer model has a one-to-one relationship with the built-in User model pr
 The Order model has a foreign key relationship with both the Customer and Product models. It also has fields for quantity, total_price, created_at, and updated_at.
 
 To add audit fields, we can modify our models as follows:
+
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -61,9 +66,11 @@ class Order(Auditable):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     total_price = models.DecimalField(max_digits=8, decimal_places=2)
+    
 Now, all our models inherit from an abstract Auditable model that defines fields for created_by, created_at, updated_by, and updated_at.
 
 To override the delete method and disable it for non-staff members, we can modify our models as follows:
+
 from django.db import models
 from django.contrib.auth.models import User
 
